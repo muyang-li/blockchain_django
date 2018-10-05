@@ -11,3 +11,6 @@ def add_block(request):
 
 def query_block(request):
     return render(request, 'query_block.html')
+
+def gene_block(request):
+    return render(request, 'gene_block.html')
