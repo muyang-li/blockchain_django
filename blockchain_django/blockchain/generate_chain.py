@@ -1,3 +1,5 @@
+# coding:utf-8
+
 import datetime as date
 import hashlib
 
@@ -16,6 +18,7 @@ def create_new_block(request):
               )
     new_block.self_hash = sha.hexdigest()
     new_block.save()
+    #此处应该返回一个成功页面html，todo
     return_message = "数据上链成功！存储区块号为：" + str(new_block.index)+"\n"
                     +"区块哈希为：" + str(new_block.self_hash)
     return HttpResponse(str(return_message))
