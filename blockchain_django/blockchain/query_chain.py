@@ -30,3 +30,8 @@ def get_block_previous_hash(request):
     return_block = Block.objects.get(index = index)
     return_message = return_block.data
     return HttpResponse(str(return_message))
+
+#查询最新区块
+# def get_latest_block_hash():
+#     latest_block = Block.objects.order_by('-index')[0]
+    
