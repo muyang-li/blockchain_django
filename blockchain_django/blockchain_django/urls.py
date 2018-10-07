@@ -24,5 +24,6 @@ urlpatterns = [
     path('add_block/',blockchain_views.add_block,name='add_block'),
     path('added_block/',blockchain_views.added_block,name='added_block'),
     path('query_block/',blockchain_views.query_block,name='query_block'),
+    path('query_result/',blockchain_views.query_result,name='query_result'),
     path('gene_block/',blockchain_views.gene_block,name='gene_block'),
 ]

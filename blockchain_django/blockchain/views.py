@@ -7,7 +7,7 @@ import hashlib
 
 from .models import Block
 
-from .forms import TransactionForm
+from .forms import TransactionForm, IndexQueryForm
 
 from .generate_chain import create_new_block
 
@@ -21,7 +21,38 @@ def home(request):
 #     return render(request, 'add_block.html')
 
 def query_block(request):
-    return render(request, 'query_block.html')
+# if this is a POST request we need to process the form data
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = IndexQueryForm(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            # process the data in form.cleaned_data as required
+            # ...
+            # redirect to a new URL:
+            index = form.cleaned_data['index']
+            object_block = Block.objects.get(index = index)
+            if object_block in Block.objects.all():
+                return HttpResponseRedirect("/query_result/?index="+str(object_block.index))
+            else:
+                return HttpResponse("所查询的区块不存在！")
+
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = IndexQueryForm()
+
+    return render(request, 'query_block.html', {'form': form})
+
+def query_result(request):
+    index = request.GET['index']
+    info_dict = {}
+    object_block = Block.objects.get(index = index)
+    info_dict['self_hash'] = object_block.self_hash
+    info_dict['index'] = object_block.index
+    info_dict['timestamp'] = object_block.timestamp
+    info_dict['data'] = object_block.data
+    info_dict['previous_hash'] = object_block.previous_hash
+    return render(request, 'query_result.html', {'info_dict': info_dict})
 
 #提交交易数据的表单
 def add_block(request):
