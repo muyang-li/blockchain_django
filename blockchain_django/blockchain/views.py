@@ -20,6 +20,52 @@ def home(request):
 # def add_block(request):
 #     return render(request, 'add_block.html')
 
+
+def query_id(request):
+# if this is a POST request we need to process the form data
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = IdQueryForm(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            # process the data in form.cleaned_data as required
+            # ...
+            # redirect to a new URL:
+            uid = form.cleaned_data['uid']
+            object_user = User.objects.get(uid = uid)
+            if object_user in User.objects.all():
+                return HttpResponseRedirect("/query_id_result/?uid="+str(object_user.uid))
+            else:
+                return HttpResponse("所查询的用户不存在！")
+
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = IdQueryForm()
+
+    return render(request, 'query_id.html', {'form': form})
+
+#
+def query_id_result(request):
+    uid = request.GET['uid']
+    info_dict = {}#用来存运单号的数据，自动创建1234...个key
+    object_user = User.objects.get(uid = uid)
+    #取出运单号字段进行处理
+    trackNumListStr = object_user.trackNumSet
+    trackNumList = trackNumListStr.split(',')
+
+    #生成存储字典
+    for i in range(1,len(trackNumList)+1):
+        keyname = 'TrackNumber'+str(i)
+        info_dict[keyname] = trackNumList[i-1]
+    info_dict['name'] = object_user.name
+    info_dict['uid'] = object_user.uid
+
+
+    return render(request, 'query_id_result.html', {'info_dict': info_dict})
+
+
+
+
 def query_block(request):
 # if this is a POST request we need to process the form data
     if request.method == 'POST':

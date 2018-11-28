@@ -6,3 +6,6 @@ class TransactionForm(forms.Form):
 class IndexQueryForm(forms.Form):
     index = forms.IntegerField()
 
+class IdQueryForm(forms.Form):
+    uid = forms.CharField(label='Identity Number', max_length=13)
+

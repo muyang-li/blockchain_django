@@ -1,0 +1,10 @@
+所查询的用户信息如下：
+姓名：{{info_dict.name}}
+身份证号：{{info_dict.uid}}
+用户{{info_dict.name}}拥有的运单号如下：
+{% for k,v in info_dict.items %}
+    {{k}}-{{v}}
+{% endfor %}
+
+
+
