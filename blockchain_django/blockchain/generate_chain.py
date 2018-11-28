@@ -31,17 +31,30 @@ sha = hashlib.sha256()
 
 #     return HttpResponse(str(return_message))
 
-def create_new_block(tx_data):
+def create_new_block(trackNum,deviceId,deviceName,dpCreationTime,location,image):
     if Block.objects.exists():
         last_block = Block.objects.order_by('-index')[0]
 
         new_block = Block(index = last_block.index +1)
         new_block.timestamp = date.datetime.now()
-        new_block.data = tx_data
+
+        #new_block.data = tx_data
+        new_block.trackNum = trackNum
+        new_block.deviceId = deviceId
+        new_block.deviceName = deviceName
+        new_block.dpCreationTime = dpCreationTime
+        new_block.location = location
+        new_block.image = image
+
         new_block.previous_hash = last_block.self_hash
         sha.update(str(new_block.index).encode("utf8") + 
                 str(new_block.timestamp).encode("utf8") +
-                str(new_block.data).encode("utf8") + 
+                str(new_block.trackNum).encode("utf8") + 
+                str(new_block.deviceId).encode("utf8") +
+                str(new_block.deviceName).encode("utf8") +
+                str(new_block.dpCreationTime).encode("utf8") +
+                str(new_block.location).encode("utf8") +
+                str(new_block.image).encode("utf8") +
                 str(new_block.previous_hash).encode("utf8")
                 )
         new_block.self_hash = sha.hexdigest()

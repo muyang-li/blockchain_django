@@ -13,7 +13,7 @@ class Block(models.Model):
     dpCreationTime = models.TimeField()
     location = models.CharField(max_length = 64)
     image = models.CharField(max_length = 64)#图片文件名
-
+    
     previous_hash = models.CharField(max_length = 64)
     self_hash = models.CharField(max_length = 64)
 
