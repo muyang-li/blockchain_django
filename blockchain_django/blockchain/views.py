@@ -5,7 +5,7 @@ from django.http import HttpResponse , HttpResponseRedirect
 import datetime as date
 import hashlib
 
-from .models import Block,User
+from .models import Block,CommonUser
 
 #from .forms import TransactionForm, IndexQueryForm
 from .forms import IdQueryForm
@@ -33,8 +33,8 @@ def query_id(request):
             # ...
             # redirect to a new URL:
             uid = form.cleaned_data['uid']
-            object_user = User.objects.get(uid = uid)
-            if object_user in User.objects.all():
+            object_user = CommonUser.objects.get(uid = uid)
+            if object_user in CommonUser.objects.all():
                 return HttpResponseRedirect("/query_id_result/?uid="+str(object_user.uid))
             else:
                 return HttpResponse("所查询的用户不存在！")
@@ -49,7 +49,7 @@ def query_id(request):
 def query_id_result(request):
     uid = request.GET['uid']
     info_dict = {}#用来存运单号的数据，自动创建1234...个key
-    object_user = User.objects.get(uid = uid)
+    object_user = CommonUser.objects.get(uid = uid)
     #取出运单号字段进行处理
     trackNumListStr = object_user.trackNumSet
     trackNumList = trackNumListStr.split(',')
