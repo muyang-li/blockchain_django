@@ -21,16 +21,18 @@ def check_new_data():
     rlist = rjson['value']#包含着所有过包信息的列表，列表元素为字典，每个字典代表一个过包记录？
 
     #遍历整个列表，生成区块
+
+    outputlist = []
     for record in rlist:
         trackNum = str(record['ID'])
         deviceId = str(record['DeviceId'])
         deviceName = str(record['DeviceName'])
-        dpCreationTime = date.datetime.strptime(iso8601ToNormal(str(record['DeviceName'])),'%Y-%m-%dT%H:%M:%S')
+        dpCreationTime = date.datetime.strptime(iso8601ToNormal(str(record['DpCreationTime'])),'%Y-%m-%dT%H:%M:%S')
         location = str(record['StrValue4'])
         image = str(record['StrValue1'])
         create_new_block(trackNum,deviceId,deviceName,dpCreationTime,location,image)
-        print('数据'+trackNum+'成功上链！')
-    return_message = '执行完毕！'
+        outputlist.append('数据'+trackNum+'成功上链！')
+    return_message = '执行完毕！'+str(outputlist)
     return return_message
 
 

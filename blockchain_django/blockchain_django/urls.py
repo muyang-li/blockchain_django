@@ -29,5 +29,6 @@ urlpatterns = [
     # #添加真实数据后
     path('query_id/',blockchain_views.query_id,name='query_id'),#根据身份证号查询过包数据
     path('query_id_result/',blockchain_views.query_id_result,name='query_id_result'),#身份证号查询过包数据结果页面
+    path('testfunc/',blockchain_views.testfunc,name='testfunc'),
 
 ]

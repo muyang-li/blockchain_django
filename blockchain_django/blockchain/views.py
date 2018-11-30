@@ -5,6 +5,8 @@ from django.http import HttpResponse , HttpResponseRedirect
 import datetime as date
 import hashlib
 
+import blockchain.checkdata
+
 from .models import Block,CommonUser
 
 #from .forms import TransactionForm, IndexQueryForm
@@ -64,6 +66,9 @@ def query_id_result(request):
 
     return render(request, 'query_id_result.html', {'info_dict': info_dict})
 
+
+def testfunc(request):
+    return HttpResponse(str(blockchain.checkdata.check_new_data()))
 
 
 
