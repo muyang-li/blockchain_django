@@ -11,10 +11,10 @@ sha = hashlib.sha256()
 def check_new_data():
     if (Block.objects.all().count() == 0):
         create_gene_block()
-    last_block = Block.objects.last()
+    last_block = Block.objects.last()#最新区块
     last_time = last_block.dpCreationTime#以过包时间作为拉去新数据的标准。
-    last_time_str = datetime_to_iso8601(str(last_time))
-    get_url = "http://112.65.156.58:9000/v2/odata/datapoints?$filter=DeviceNumber eq '000000004' and SensorTypeNum eq 20402"+"and dpCreationTime gt "+last_time_str+"&$orderby=dpCreationTime desc"
+    last_time_str = datetime_to_iso8601(str(last_time))#最新时间的正常格式，字符串
+    get_url = "http://112.65.156.58:9000/v2/odata/datapoints?$filter=DeviceNumber eq '000000004' "+"and dpCreationTime gt "+last_time_str+"&$orderby=dpCreationTime desc"
 
     r = requests.get(get_url)
     rjson = r.json()
@@ -42,7 +42,7 @@ def datetime_to_iso8601(timestr): #将数据库存储的datetime对象转化为h
     return_time = "".join(timelist[:10]) + "T" + "".join(timelist[11:19]) + "%2B08:00"
     return return_time
 
-def iso8601ToNormal(isostr):
+def iso8601ToNormal(isostr):#iso8601格式的时间，转换成正常的时间格式，返回字符串
     timelist = list(isostr)
     dotindex = timelist.index('.')
     normalstr = "".join(timelist[:dotindex])

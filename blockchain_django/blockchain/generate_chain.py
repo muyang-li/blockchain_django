@@ -34,7 +34,7 @@ sha = hashlib.sha256()
 
 def create_new_block(trackNum,deviceId,deviceName,dpCreationTime,location,image):
     if Block.objects.exists():
-        last_block = Block.objects.order_by('-index')[0]
+        last_block = Block.objects.order_by('-index')[0]#最新区块
 
         new_block = Block(index = last_block.index +1)
         new_block.timestamp = timezone.now()
